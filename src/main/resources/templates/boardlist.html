@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title th:text="게시물"></title>
+	</head>
+	<body>
+		<h3>게시물</h3>
+		<table>
+			<tr th:each="list : ${data}">
+				<td th:text="|id:${list.id}|"></td>
+				<td th:text="|title:${list.title}|"></td>
+				<td th:text="|content:${list.content}|"></td>
+				<td th:text="|writer:${list.writer}|"></td>
+			</tr>
+		</table>
+	</body>
+</html>

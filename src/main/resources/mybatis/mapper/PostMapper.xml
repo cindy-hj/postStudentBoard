@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.PostMapper">
+	<sql id="postColumns">
+		id
+		,title
+		,content
+		,writer
+		,view_cnt
+		,notice_yn
+		,delete_yn
+		,created_date
+		,modified_date		
+	</sql>
+	
+	<sql id="postSaveColumns">
+		title
+		,content
+		,writer
+		,view_cnt
+		,notice_yn
+		,delete_yn
+		,created_date
+		,modified_date		
+	</sql>
+	
+	<!-- id를 입력 하는 값에서 빼서 userGenertedKeys와 keyProperty로 자동으로 생성되도록 한것-->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.exam.DTO.post.PostRequest">
+		INSERT INTO 
+			post_board (
+				<include refid="postSaveColumns" />
+		) VALUES (
+			#{title}
+			,#{content}
+			,#{writer}
+			,0
+			,#{noticeYn}
+			,0
+			,now()
+			,NULL
+		)
+	</insert>
+	
+	<select id="findById" parameterType="long" resultType="com.exam.DTO.post.PostResponse">
+		SELECT
+			<include refid="postColumns" />
+		FROM
+			post_board
+		WHERE
+			id=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.exam.DTO.post.PostRequest">
+		UPDATE 
+			post_board
+		SET
+			modified_date=now()
+			,title=#{title}
+			,content=#{content}
+			,writer=#{writer}
+			,notice_yn=#{noticeYn}
+		WHERE
+			id=#{id}
+	</update>
+	
+	<delete id="deleteById" parameterType="long">
+		UPDATE 
+			post_board
+		SET
+			delete_yn=1
+		WHERE
+			id=#{id}
+	</delete>
+	
+	<select id="findAll" resultType="com.exam.DTO.post.PostRequest">
+		SELECT
+			<include refid="postColumns" />
+		FROM
+			post_board
+		WHERE
+			delete_yn=0
+		ORDER BY
+			id DESC
+	</select>
+
+	<select id="findByName" resultType="com.exam.DTO.post.PostRequest">
+		SELECT
+			<include refid="postColumns" />
+		FROM
+			post_board
+		WHERE
+			delete_yn=0 
+			AND
+			writer like CONCAT('%',#{name},'%')
+	</select>
+	
+	
+
+</mapper>

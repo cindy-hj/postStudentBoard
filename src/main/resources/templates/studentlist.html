@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title th:text="학생정보"></title>
+	</head>
+	<body>
+		<h3>Student List</h3>
+		<table>
+			<tr th:each="std: ${studentList}">
+				<td th:text="|${std.id} : ${std.name}|"></td>
+				<td th:text="|나이 : ${std.age}|"></td>
+				<td th:text="|성적 : ${std.grade}|"></td>
+			</tr>
+		</table>
+	</body>
+</html>

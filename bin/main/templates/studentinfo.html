@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title th:text="학생정보"></title>
+	</head>
+	<body>
+		<h3>Student Info</h3>
+		<p th:text="${student.id}"></p>
+		<p th:text="${student.name}"></p>
+		<p th:text="${student.age}"></p>
+		<p th:text="${student.grade}"></p>
+		
+		<p th:if="${student.grade>80}">합격입니다.</p>
+		<p th:unless="${student.grade>80}">불합격.. 좀더 노력하세요.</p>
+		<th:block th:if="${student.grade>=90}" th:text="|${student.name} 통과! A등급|"></th:block>
+		<p />
+		
+		<table>
+			<tr th:each="std: ${studentList}">
+				<td th:text="|${std.id} : ${std.name}|"></td>
+				<td th:text="|나이 : ${std.age}|"></td>
+				<td th:text="|성적 : ${std.grade}|"></td>
+			</tr>
+		</table>
+	</body>
+</html>
